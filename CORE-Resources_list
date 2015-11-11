@@ -1,0 +1,5 @@
+https://127.0.0.1:8080/api/CORE/Resources/list
+
+{"searchTypes":["TPL-PTF-VIEW"],"rows":25,"qwhere":" AND (\"Resources\".\"type\" in ('TPL-PTF-VIEW'))","qorder":"\"Resources\".\"name\" asc","Companies_key":3,"sid":"Sbaaa0925c14fd38f7183a178a05626347b1275e5"}
+
+{"rows":[{"Resources_key":"4184732","Resources_name":"max1","Resources_type":"TPL-PTF-VIEW","Resources_CompaniesKey":3,"Resources_data":{"fields":["asset.Assets_AssetTypo","asset.Assets_AssetShortName","asset.Assets_AssetIsin","asset.Assets_AssetCurrency","Trades_quota","Trades_netPrice","Trades_avgChange","Trades_amount","Trades_curPriceDate","Trades_curPrice","Trades_avgCurChange","Trades_avgCurVizChange","Trades_curNetAmount","Trades_curInterest","Trades_data.calc_netPnlu","Trades_data.calc_netPnluNC","Trades_data.calc_netPerfu","asset.Assets_AssetCountryName","Trades_curPAWeight"]},"Resources_mts":"2015-09-29T14:13:39.231Z","Resources_tags":[],"Share_perm":10}],"page":1}
