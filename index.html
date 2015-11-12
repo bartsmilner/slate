@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["json"]);
+          setupLanguages(["json","javascript"]);
         });
       </script>
   </head>
@@ -29,6 +29,7 @@
       <img src="images/logo.png" />
         <div class="lang-selector">
               <a href="#" data-language-name="json">JSON Request/Response</a>
+              <a href="#" data-language-name="javascript">Javascript</a>
         </div>
         <div class="search">
           <input type="text" class="search" id="input-search" placeholder="Search">
@@ -62,6 +63,25 @@
   </span><span class="nt">"Portfolios_key"</span><span class="p">:</span><span class="s2">"4601344"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<pre class="highlight javascript"><code><span class="c1">//If you want to to use Nodejs for REST, with node installed for your target directory, (where the fs module is installed with Node) simply run npm install sync-request and you can test run the api functions with a json object request that must include your API key to retrieve the response. You can also include the json request object inside the request function and avoid using require fs and external json files.</span>
+
+<span class="c1">//With sync-request a simple testFincluster.js file would be:</span>
+
+<span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'sync-request'</span><span class="p">);</span>  
+
+<span class="kd">var</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'fs'</span><span class="p">);</span>
+
+<span class="kd">var</span> <span class="nx">This_function</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'This_function.json'</span><span class="p">));</span>
+
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'ACTION'</span><span class="p">,</span> <span class="s1">'API_Endpoint'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="p">{</span><span class="nx">This_function</span><span class="p">}});</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'\nThis_function'</span><span class="p">,</span><span class="nx">res</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(</span><span class="s1">'utf8'</span><span class="p">));</span>
+
+<span class="c1">//OR</span>
+
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'ACTION'</span><span class="p">,</span> <span class="s1">'API_Endpoint'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="p">{</span><span class="s2">"request_object_in_JSON_format_keys"</span><span class="p">:</span><span class="s2">"values"</span><span class="p">}});</span>
+
+<span class="c1">//To run, simply type (in your target directory in your Terminal): node fincluster</span>
+</code></pre>
 
 <p>Welcome to the Fincluster API! You can use our API to access Fincluster API endpoints.</p>
 
@@ -141,8 +161,17 @@
   </span><span class="nt">"Users_capabilities"</span><span class="p">:[],</span><span class="w">
   </span><span class="nt">"sid"</span><span class="p">:</span><span class="s2">"S152d5ca85700b3056f7e02f9f60996f27587c195"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-
 </span></code></pre>
+<pre class="highlight javascript"><code><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">[</span><span class="s1">'NODE_TLS_REJECT_UNAUTHORIZED'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'0'</span><span class="p">;</span><span class="c1">//to prevent Error: UNABLE_TO_VERIFY_LEAF_SIGNATURE;</span>
+
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Auth/get'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="p">{</span><span class="s2">"username"</span><span class="p">:</span><span class="s2">"username"</span><span class="p">,</span><span class="s2">"password"</span><span class="p">:</span><span class="s2">"p*ssw*rd!"</span><span class="p">}});</span>
+<span class="c1">//OR</span>
+<span class="kd">var</span> <span class="nx">Auth_get</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/testAPIJSON/Auth_get.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Auth/get'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="nx">Auth_get</span><span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">resObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(</span><span class="s1">'utf8'</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'\nAUTH_get'</span><span class="p">,</span><span class="nx">resObj</span><span class="p">);</span>
+</code></pre>
 
 <h3 id="auth_get-query-parameters">Auth_get Query Parameters</h3>
 
@@ -184,7 +213,7 @@
 <p>https://fincluster.com/api/Developers/key</p>
 </blockquote>
 
-<p>Initial authentication using the Required parameters of <code class="prettyprint">Auth_get</code> is required to validate any subsequent <code class="prettyprint">&quot;sid&quot;: &quot;value&quot;</code>, either generated by this Endpoint call or by a previous one. <strong>???Reconfigure for public API???</strong> <em>Fincluster uses API keys to allow access to the API. You can register a new Fincluster API key at our <a href="https://fincluster.com/api/Developers/key">developer portal</a></em>.</p>
+<p>Initial authentication using the Required parameters of <code class="prettyprint">Auth_get</code> will generate a <code class="prettyprint">new sid: value</code>. <code class="prettyprint">Auth_get</code> is required to validate any subsequent <code class="prettyprint">&quot;sid&quot;: &quot;value&quot;</code> in a REQUEST, whether generated by this Endpoint call or by a previous one. <strong>???Reconfigure for public API???</strong> <em>Fincluster uses API keys to allow access to the API. You can register a new Fincluster API key at our <a href="https://fincluster.com/api/Developers/key">developer portal</a></em>.</p>
 
 <p>After authentication, the Fincluster database expects the API key to be included in all API requests to the server in a header that looks like the following:</p>
 
@@ -226,8 +255,15 @@ You must replace <code>Your_API_key</code> with your personal API key.
 </span><span class="p">{</span><span class="w">
   </span><span class="nt">"Portfolios_key"</span><span class="p">:</span><span class="s2">"4601344"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-
 </span></code></pre>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Portfolios/save'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="p">{</span><span class="s2">"Portfolios_name"</span><span class="p">:</span><span class="s2">"001testAPI1"</span><span class="p">,</span><span class="s2">"sid"</span><span class="p">:</span><span class="s2">"Sf78b111252c3b01d13f234e40fa1f42dc87d454d"</span><span class="p">,</span><span class="s2">"Portfolios_data"</span><span class="p">:{}}});</span>
+<span class="c1">//OR</span>
+<span class="kd">var</span> <span class="nx">Portfolios_save</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/testAPIJSON/Portfolios_save.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Portfolios/save'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="nx">Portfolios_save</span><span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">resObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(</span><span class="s1">'utf8'</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'\nPortfolios_save'</span><span class="p">,</span><span class="nx">resObj</span><span class="p">);</span>
+</code></pre>
 
 <p><code class="prettyprint">Portfolios_save</code> creates a new Portfolio, with the parameters listed in the following table. A successful request will return a new Portfolio: id as the <code class="prettyprint">&quot;Portfolios_key&quot;</code> string value. The Portfolio: id is unique, the Portfolio: name does not have to be unique.</p>
 
@@ -462,8 +498,15 @@ You must replace <code>Your_API_key</code> with your personal API key.
 </span><span class="nt">"Shares_UsersNames"</span><span class="p">:[</span><span class="w">
 </span><span class="s2">"User Name"</span><span class="p">]</span><span class="w">
 </span><span class="p">}],</span><span class="nt">"page"</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span><span class="w">
-
 </span></code></pre>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Portfolios/list'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="p">{</span><span class="s2">"sid"</span><span class="p">:</span><span class="s2">"Sf78b111252c3b01d13f234e40fa1f42dc87d454d"</span><span class="p">}});</span>
+<span class="c1">//OR</span>
+<span class="kd">var</span> <span class="nx">Portfolios_list</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/testAPIJSON/Portfolios_list.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Portfolios/list'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="nx">Portfolios_list</span><span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">resObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(</span><span class="s1">'utf8'</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'\nPortfolios_list'</span><span class="p">,</span><span class="nx">resObj</span><span class="p">);</span>
+</code></pre>
 
 <p><code class="prettyprint">Portfolios_list</code> lists all available portfolios, sorted by qorder values ??? (asc || desc).</p>
 
@@ -542,8 +585,15 @@ You must replace <code>Your_API_key</code> with your personal API key.
 </span><span class="p">{</span><span class="w">
   </span><span class="nt">"Portfolios_keys"</span><span class="p">:[</span><span class="s2">"4603731"</span><span class="p">,</span><span class="s2">"4603729"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-
 </span></code></pre>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Portfolios/del'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="p">{</span><span class="s2">"qwhere"</span><span class="p">:</span><span class="s2">" AND \"Portfolios\".\"key\" in ("</span><span class="o">+</span> <span class="nx">oldTestID</span> <span class="o">+</span> <span class="s2">", "</span><span class="o">+</span> <span class="nx">oldTestID1</span> <span class="o">+</span> <span class="s2">")"</span><span class="p">,</span><span class="s2">"sid"</span><span class="p">:</span><span class="s2">"S2f1667847932c30972205746a5b748c85d9ce693"</span><span class="p">}});</span>
+<span class="c1">//OR</span>
+<span class="kd">var</span> <span class="nx">Portfolios_del</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/testAPIJSON/Portfolios_del.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Portfolios/del'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="nx">Portfolios_del</span><span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">resObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(</span><span class="s1">'utf8'</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'\nPortfolios_del'</span><span class="p">,</span><span class="nx">resObj</span><span class="p">);</span>
+</code></pre>
 
 <p><code class="prettyprint">Portfolios_del</code> deletes a portfolio or portfolios, with the parameters listed in the following table. A successful request will return the deleted Portfolio: id(s) as an array of the deleted <code class="prettyprint">&quot;Portfolios_key&quot;</code> string values. If the query selection criteria (here, portfolios IDs) are not found, the RESPONSE will be an empty array <code class="prettyprint">{&quot;Portfolios_keys&quot;:[]}</code>.</p>
 
@@ -994,8 +1044,15 @@ You must replace <code>Your_API_key</code> with your personal API key.
 </span><span class="nt">"history"</span><span class="p">:[]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-
 </span></code></pre>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Report/status'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="p">{</span><span class="s2">"Portfolios_keys"</span><span class="p">:[</span><span class="s2">"4596289"</span><span class="p">],</span><span class="s2">"sid"</span><span class="p">:</span><span class="s2">"Sf78b111252c3b01d13f234e40fa1f42dc87d454d"</span><span class="p">}});</span>
+<span class="c1">//OR</span>
+<span class="kd">var</span> <span class="nx">Report_status</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/testAPIJSON/Report_status.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/CORE/Report/status'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="nx">Report_status</span><span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">resObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(</span><span class="s1">'utf8'</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'\nReport_status'</span><span class="p">,</span><span class="nx">resObj</span><span class="p">);</span>
+</code></pre>
 
 <p><code class="prettyprint">Report_status</code> shows all the properties, values, calculations, resources and assets related to a portfolio, or aggregated series of portfolios identified by their IDs (<code class="prettyprint">Portfolios_keys</code>).</p>
 
@@ -1169,6 +1226,7 @@ You must replace <code>Your_API_key</code> with your personal API key.
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="json">JSON Request/Response</a>
+                <a href="#" data-language-name="javascript">Javascript</a>
           </div>
       </div>
     </div>
