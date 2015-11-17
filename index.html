@@ -1229,7 +1229,7 @@ You must replace <code>Your_API_key</code> with your personal API key.
 </blockquote>
 <pre class="highlight json"><code><span class="err">//request</span><span class="w">
 </span><span class="p">{</span><span class="w">
-  </span><span class="nt">"Portfolios_keys"</span><span class="p">:[</span><span class="s2">"4603841"</span><span class="p">],</span><span class="w">
+  </span><span class="nt">"Portfolios_keys"</span><span class="p">:[</span><span class="s2">"000000"</span><span class="p">],</span><span class="w">
   </span><span class="nt">"sid"</span><span class="p">:</span><span class="s2">"Your_API_key"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"currency"</span><span class="p">:</span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
   </span><span class="nt">"endDate"</span><span class="p">:</span><span class="s2">"2015-11-10T13:32:17+00:00"</span><span class="p">,</span><span class="w">
@@ -1704,7 +1704,7 @@ You must replace <code>Your_API_key</code> with your personal API key.
 <td>simulate</td>
 <td>FALSE</td>
 <td>Boolean</td>
-<td>???</td>
+<td>Switch to include pending orders</td>
 </tr>
 <tr>
 <td>Companies_key</td>
@@ -1764,13 +1764,209 @@ You must replace <code>Your_API_key</code> with your personal API key.
 
 <p><code class="prettyprint">limitStatus</code> is a boolean for exposure limits imposed on assets </p>
 
+<h2 id="position-editor">Position Editor</h2>
+
+<p><strong><em>Portfolios_list</em></strong></p>
+
+<p><strong><em>Resources_listRelations</em></strong></p>
+
+<p><strong><em>Portfolios_listAccounts</em></strong></p>
+
+<p><strong><em>Search security</em></strong> - Assets/list</p>
+
+<h2 id="save-new-position">Save new position</h2>
+
 <h2 id="export-portfolio-position">Export Portfolio position</h2>
 
 <blockquote>
-<p>https://dev.fincluster.com:8080/api/Export/file ???CORE</p>
+<p>https://dev.fincluster.com:8080/api/NS-FINCLUSTER/Export/file</p>
 </blockquote>
 
-<p>PDF schema FINCLUSTER-PORTFOLIO-PDF ???&amp;&amp;&hellip;???</p>
+<p>There are four schemas available for exporting a Portfolio page, all with same <code class="prettyprint">endPoint</code>: <code class="prettyprint">https://dev.fincluster.com:8080/api/NS-FINCLUSTER/Export/file</code>. Two schemas generate history and activity PDFs and two generate the security and cash position CSVs, which have a default comma (&ldquo;,&rdquo;) delimiter, but will also accept semicolon (&ldquo;;&rdquo;) and hash (&ldquo;#&rdquo;) delimiters.</p>
+
+<h3 id="standard-securities-position-csv"><a name="stndSecPos"></a>Standard Securities Position (CSV)</h3>
+<pre class="highlight json"><code><span class="err">//request</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"sid"</span><span class="p">:</span><span class="s2">"Your_API_key"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Portfolios_keys"</span><span class="p">:[</span><span class="s2">"000000"</span><span class="p">],</span><span class="w">
+  </span><span class="nt">"schema"</span><span class="p">:</span><span class="s2">"FINCLUSTER-POSITION_SEC_CSV"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currency"</span><span class="p">:</span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"endDate"</span><span class="p">:</span><span class="s2">"2015-11-17T09:56:07+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"delimiter"</span><span class="p">:</span><span class="s2">","</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Companies_key"</span><span class="p">:</span><span class="mi">3</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="err">//response</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"file"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"FINCLUSTER-POSITION_SEC_CSV_20151117.csv"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"format"</span><span class="p">:</span><span class="s2">"csv"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"content"</span><span class="p">:</span><span class="s2">"UE9SVEZPTElPX0lEI1BPUlRGT0xJT19FWFRJRCNQT1JURk9MSU8jQkFOSyNBQ0NPVU5UX0lEI0FDQ09VTlQjREFURSNTRUNfSVNJTiNTRUNfVElDS0VSI1NFQ1VSSVRZI1NFQ19DQ1kjU0VDX1RZUEUjUVRZI1BSSUNFI1BSSUNFX05FVCNFWFJBVEUjQU1PVU5UI0FNT1VOVF9MT0MjQU1PVU5UX05FVCNBTU9VTlRfTkVUX0xPQyNDT01NSVNTSU9OX0NPU1QjSU5URVJFU1RfQ09TVCNQUklDRV9NS1QjRVhSQVRFX01LVCNBTU9VTlRfTUtUI0FNT1VOVF9ORVRfTUtUI0FNT1VOVF9NS1RfTE9DI0FNT1VOVF9ORVRfTUtUX0xPQyNJTlRFUkVTVF9NS1QjRVhQT1NVUkVfTUtUI1dFSUdIVCNQTkxfVU5STCNQRVJGX1VOUkwK"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"aux"</span><span class="p">:{},</span><span class="w">
+    </span><span class="nt">"link"</span><span class="p">:</span><span class="s2">"/ns/FINCLUSTER/pub/tmp/FINCLUSTER-POSITION_SEC_CSV_20151117.csv"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/NS-FINCLUSTER/Export/file'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="p">{</span><span class="s2">"sid"</span><span class="p">:</span><span class="s2">"Your_API_key"</span><span class="p">,</span> <span class="s2">"schema"</span><span class="p">:</span><span class="s2">"FINCLUSTER-POSITION_SEC_CSV"</span><span class="p">,</span><span class="s2">"Portfolios_keys"</span><span class="p">:</span><span class="s2">"Portfolio ID"</span><span class="p">}}));</span>
+<span class="c1">//OR</span>
+<span class="kd">var</span> <span class="nx">Export_Sec_Pos</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/testAPIJSON/Export_Sec_Pos.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://fincluster.com/api/NS-FINCLUSTER/Export/file'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="nx">Export_Sec_Pos</span><span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">resObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(</span><span class="s1">'utf8'</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'\nExport_Sec_Pos'</span><span class="p">,</span><span class="nx">resObj</span><span class="p">);</span>
+
+<span class="c1">//The Response `file.content` in base64 can be translated into ascii by for example:</span>
+<span class="kd">var</span> <span class="nx">exportSecPortfolioData</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Buffer</span><span class="p">(</span><span class="nx">resObj</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">content</span><span class="p">,</span> <span class="s1">'base64'</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="s1">'ascii'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'exportSecPortfolioData'</span><span class="p">,</span> <span class="nx">exportSecPortfolioData</span><span class="p">);</span>
+</code></pre>
+
+<p>If <code class="prettyprint">endDate</code> is omitted from the Request it defaults to current, and if <code class="prettyprint">Date</code> Type is used it will be set to 23:59:59 for the closing prices for that date. The <code class="prettyprint">delimiter</code> defaults to &ldquo;,&rdquo; if omitted. The optional <code class="prettyprint">currency</code> parameter can be used to translate the results from the base currency to a different currency. </p>
+
+<p>The Response <code class="prettyprint">file.content</code> is formatted as base64. The Response <code class="prettyprint">file.name</code> is generated automatically based on the schema <code class="prettyprint">name</code> and <code class="prettyprint">endDate</code> and the returned <code class="prettyprint">file.link</code> gives the path for download from <code class="prettyprint">https://dev.fincluster.com:8080/</code>. The CSV headers generated are:</p>
+
+<p><code class="prettyprint">PORTFOLIO_ID,PORTFOLIO_EXTID,PORTFOLIO,BANK,ACCOUNT_ID,ACCOUNT,DATE,SEC_ISIN,SEC_TICKER,SECURITY,SEC_CCY,SEC_TYPE,QTY,PRICE,PRICE_NET,EXRATE,AMOUNT,AMOUNT_LOC,AMOUNT_NET,AMOUNT_NET_LOC,COMMISSION_COST,INTEREST_COST,PRICE_MKT,EXRATE_MKT,AMOUNT_MKT,AMOUNT_NET_MKT,AMOUNT_MKT_LOC,AMOUNT_NET_MKT_LOC,INTEREST_MKT,EXPOSURE_MKT,WEIGHT,PNL_UNRL,PERF_UNRL</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sid</td>
+<td>TRUE</td>
+<td>String</td>
+<td>Your API key</td>
+</tr>
+<tr>
+<td>Portfolios_keys</td>
+<td>TRUE</td>
+<td>Array of Strings</td>
+<td>Selected Portfolio ID</td>
+</tr>
+<tr>
+<td>schema</td>
+<td>TRUE</td>
+<td>String</td>
+<td>&ldquo;FINCLUSTER-POSITION_SEC_CSV&rdquo;</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>FALSE</td>
+<td>String</td>
+<td>Result display currency</td>
+</tr>
+<tr>
+<td>endDate</td>
+<td>FALSE</td>
+<td>DateTime or Date</td>
+<td>YYYY-MM-DDThh:mm:ss (UTC) or YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>delimiter</td>
+<td>FALSE</td>
+<td>String</td>
+<td>&ldquo;,&rdquo;(default) or &ldquo;;&rdquo; or &ldquo;#&rdquo;</td>
+</tr>
+<tr>
+<td>Companies_key</td>
+<td>FALSE</td>
+<td>Number</td>
+<td>Company ID</td>
+</tr>
+</tbody></table>
+
+<h3 id="standard-cash-position-csv">Standard Cash Position (CSV)</h3>
+<pre class="highlight json"><code><span class="err">//request</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"sid"</span><span class="p">:</span><span class="s2">"Your_API_key"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Portfolios_keys"</span><span class="p">:[</span><span class="s2">"000000"</span><span class="p">],</span><span class="w">
+  </span><span class="nt">"schema"</span><span class="p">:</span><span class="s2">"FINCLUSTER-POSITION_CASH_CSV"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"currency"</span><span class="p">:</span><span class="s2">"EUR"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"endDate"</span><span class="p">:</span><span class="s2">"2015-11-17T09:56:07+00:00"</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"delimiter"</span><span class="p">:</span><span class="s2">","</span><span class="p">,</span><span class="w">
+  </span><span class="nt">"Companies_key"</span><span class="p">:</span><span class="mi">3</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="err">//response</span><span class="w">
+</span><span class="p">{</span><span class="w">
+  </span><span class="nt">"file"</span><span class="p">:</span><span class="w">
+    </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"FINCLUSTER-POSITION_CASH_CSV_20151117.csv"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"format"</span><span class="p">:</span><span class="s2">"csv"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"content"</span><span class="p">:</span><span class="s2">"UE9SVEZPTElPX0lELFBPUlRGT0xJT19FWFRJRCxQT1JURk9MSU8sQUNDT1VOVF9JRCxBQ0NPVU5ULERBVEUsU0VDX1RJQ0tFUixTRUNVUklUWSxTRUNfQ0NZLFFUWSxBTU9VTlQsQU1PVU5UX0xPQyxFWFJBVEVfTUtULEFNT1VOVF9NS1QsQU1PVU5UX01LVF9MT0MsV0VJR0hULFBOTF9VTlJMCjQ4MzYzOTMsRkMwMDEsMDAxdGVzdEFQSSw0ODM2Mzk1LDAwMDEsMjAxNS0xMS0xNyxFVVIgQ1VSTkNZLEV1cm8gU3BvdCxFVVIsMTAwMCwxMDAwLDEwMDAsMSwxMDAwLDEwMDAsMSwK"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"aux"</span><span class="p">:{},</span><span class="w">
+    </span><span class="nt">"link"</span><span class="p">:</span><span class="s2">"/ns/FINCLUSTER/pub/tmp/FINCLUSTER-POSITION_CASH_CSV_20151117.csv"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://dev.fincluster.com:8080/api/NS-FINCLUSTER/Export/file'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="p">{</span><span class="s2">"sid"</span><span class="p">:</span><span class="s2">"Your_API_key"</span><span class="p">,</span> <span class="s2">"schema"</span><span class="p">:</span><span class="s2">"FINCLUSTER-POSITION_CASH_CSV"</span><span class="p">,</span><span class="s2">"Portfolios_keys"</span><span class="p">:</span><span class="s2">"Portfolio ID"</span><span class="p">}}));</span>
+<span class="c1">//OR</span>
+<span class="kd">var</span> <span class="nx">Export_Cash_Pos</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">'/testAPIJSON/Export_Cash_Pos.json'</span><span class="p">));</span>
+<span class="kd">var</span> <span class="nx">res</span> <span class="o">=</span> <span class="nx">request</span><span class="p">(</span><span class="s1">'POST'</span><span class="p">,</span> <span class="s1">'https://fincluster.com/api/NS-FINCLUSTER/Export/file'</span><span class="p">,</span> <span class="p">{</span><span class="s1">'json'</span><span class="p">:</span> <span class="nx">Export_Cash_Pos</span><span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">resObj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">getBody</span><span class="p">(</span><span class="s1">'utf8'</span><span class="p">));</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'\nExport_Sec_Pos'</span><span class="p">,</span><span class="nx">resObj</span><span class="p">);</span>
+
+<span class="c1">//The Response `file.content` in base64 can be translated into ascii by for example:</span>
+<span class="kd">var</span> <span class="nx">exportCashPortfolioData</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Buffer</span><span class="p">(</span><span class="nx">resObj</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">content</span><span class="p">,</span> <span class="s1">'base64'</span><span class="p">).</span><span class="nx">toString</span><span class="p">(</span><span class="s1">'ascii'</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'exportCashPortfolioData'</span><span class="p">,</span> <span class="nx">exportCashPortfolioData</span><span class="p">);</span>
+</code></pre>
+
+<p>The endPoint and Require -&gt; Response objects for <code class="prettyprint">Standard Cash Position (CSV)</code> are the same as <a href="#stndSecPos"><code class="prettyprint">Standard Securities Position (CSV)</code></a>. The difference is that the schema must be: <code class="prettyprint">&quot;FINCLUSTER-POSITION_CASH_CSV&quot;</code> and the headers generated in the Response <code class="prettyprint">file.content</code> are: </p>
+
+<p><code class="prettyprint">PORTFOLIO_ID,PORTFOLIO_EXTID,PORTFOLIO,ACCOUNT_ID,ACCOUNT,DATE,SEC_TICKER,SECURITY,SEC_CCY,QTY,AMOUNT,AMOUNT_LOC,EXRATE_MKT,AMOUNT_MKT,AMOUNT_MKT_LOC,WEIGHT,PNL_UNRL</code></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Required</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>sid</td>
+<td>TRUE</td>
+<td>String</td>
+<td>Your API key</td>
+</tr>
+<tr>
+<td>Portfolios_keys</td>
+<td>TRUE</td>
+<td>Array of Strings</td>
+<td>Selected Portfolio ID</td>
+</tr>
+<tr>
+<td>schema</td>
+<td>TRUE</td>
+<td>String</td>
+<td>&ldquo;FINCLUSTER-POSITION_CASH_CSV&rdquo;</td>
+</tr>
+<tr>
+<td>currency</td>
+<td>FALSE</td>
+<td>String</td>
+<td>Result display currency</td>
+</tr>
+<tr>
+<td>endDate</td>
+<td>FALSE</td>
+<td>DateTime or Date</td>
+<td>YYYY-MM-DDThh:mm:ss (UTC) or YYYY-MM-DD</td>
+</tr>
+<tr>
+<td>delimiter</td>
+<td>FALSE</td>
+<td>String</td>
+<td>&ldquo;,&rdquo;(default) or &ldquo;;&rdquo; or &ldquo;#&rdquo;</td>
+</tr>
+<tr>
+<td>Companies_key</td>
+<td>FALSE</td>
+<td>Number</td>
+<td>Company ID</td>
+</tr>
+</tbody></table>
 
 <h2 id="import-portfolio-position-data">Import Portfolio position data</h2>
 
@@ -1805,18 +2001,6 @@ You must replace <code>Your_API_key</code> with your personal API key.
 <h2 id="show-portfolio-position-templates">Show Portfolio Position templates</h2>
 
 <p><strong><a href="#resourcesList"><code class="prettyprint">Resources_list</code></a></strong> </p>
-
-<h2 id="position-editor">Position Editor</h2>
-
-<p><strong><em>Portfolios_list</em></strong></p>
-
-<p><strong><em>Resources_listRelations</em></strong></p>
-
-<p><strong><em>Portfolios_listAccounts</em></strong></p>
-
-<p><strong><em>Search security</em></strong> - Assets/list</p>
-
-<h2 id="save-new-position">Save new position</h2>
 
 <p><strong><em>Transactions/save</em></strong></p>
 
